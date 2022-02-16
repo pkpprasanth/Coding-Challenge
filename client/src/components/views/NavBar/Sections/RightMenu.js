@@ -1,0 +1,56 @@
+import React from 'react';
+import { Menu } from 'antd';
+import axios from 'axios';
+import { USER_SERVER } from '../../../Config';
+import { withRouter } from 'react-router-dom';
+import { useSelector } from "react-redux";
+
+function RightMenu(props) {
+  const user = useSelector(state => state.user)
+
+  const logoutHandler = () => {
+    axios.get(`${USER_SERVER}/logout`).then(response => {
+      if (response.status === 200) {
+        localStorage.clear()
+        props.history.push("/");
+      } else {
+        alert('Log Out Failed')
+      }
+    });
+  };
+
+  if (localStorage.getItem("userId")==null) {
+    
+return (
+      <Menu mode={props.mode}>
+        <Menu.Item key="mail">
+          <a href="/">Signin</a>
+        </Menu.Item>
+        <Menu.Item key="app">
+          <a href="/register">Signup</a>
+        </Menu.Item>
+        
+      </Menu>
+     
+      
+    )
+  } else {
+    return (
+      <Menu mode={props.mode}>
+          <Menu.Item key="mail">
+      <a href="/home">Home</a>
+    </Menu.Item>
+    <Menu.Item key="changepassword">
+          <a href="/change">Change Password</a>
+        </Menu.Item>
+    <Menu.Item key="logout">
+          <a onClick={logoutHandler}>Logout</a>
+        </Menu.Item>
+      </Menu>
+    )
+  }
+  
+}
+
+export default withRouter(RightMenu);
+
