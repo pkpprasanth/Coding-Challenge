@@ -14,6 +14,8 @@
 3. Type npm install inside the root directory
 4. Type npm install inside the client directory
 
+## How to start project?
+ npm run dev
 
 ## Starter Output
 
